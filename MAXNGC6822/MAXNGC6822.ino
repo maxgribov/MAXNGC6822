@@ -35,9 +35,15 @@ Sprite testSprite3 = Sprite(0x8C80, positionMake(5, -3), true);
 
 void setup() {
 
-    Serial.begin(9600);
+   // Serial.begin(9600);
 
-    mainDisplay.test();
+   // mainDisplay.test();
+    
+
+
+}
+
+void loop() {
     
     for (int pos = 0; pos < 18; pos++) {
         
@@ -49,39 +55,25 @@ void setup() {
         mainDisplay.drawSprite(testSprite2);
         mainDisplay.drawSprite(testSprite3);
         mainDisplay.update();
-        delay(500);
+        delay(100);
         
     }
-
-}
-
-void loop() {
     
-    /*
-    mainDisplay.drawSprite(testSprite);
-    mainDisplay.update();
-    Serial.println("Sprite created");
-    delay(500);
+    delay(300);
     
+    for (int pos = 0; pos < 18; pos++) {
+        
+        testSprite.moveSprite(-1, 0);
+        testSprite2.moveSprite(1, 0);
+        testSprite3.moveSprite(0, -1);
+        mainDisplay.clearDisplayMemory();
+        mainDisplay.drawSprite(testSprite);
+        mainDisplay.drawSprite(testSprite2);
+        mainDisplay.drawSprite(testSprite3);
+        mainDisplay.update();
+        delay(100);
+        
+    }
     
-    testSprite.moveSprite(1, 0);
-    mainDisplay.drawSprite(testSprite);
-    mainDisplay.update();
-    Serial.println("Sprite moved");
-    delay(500);
-    
-    testSprite.moveSprite(1, 0);
-    mainDisplay.drawSprite(testSprite);
-    mainDisplay.update();
-    Serial.println("Sprite moved");
-    delay(500);
-    
-    testSprite.moveSprite(1, 0);
-    mainDisplay.drawSprite(testSprite);
-    mainDisplay.update();
-    Serial.println("Sprite moved");
-    delay(500);
-     
-     */
-
+    delay(300);
 }
