@@ -8,87 +8,80 @@
 // 				Max Gribov
 //
 // Date			01/01/15 19:35
-// Version		<#version#>
+// Version		1.0
 //
 // Copyright	© Max Gribov, 2015
-// Licence		<#license#>
+// Licence		MIT
 //
 // See         ReadMe.txt for references
 //
 
 
-// Core library for code-sense - IDE-based
-#if defined(WIRING) // Wiring specific
-#include "Wiring.h"
-#elif defined(MAPLE_IDE) // Maple specific
-#include "WProgram.h"
-#elif defined(MPIDE) // chipKIT specific
-#include "WProgram.h"
-#elif defined(DIGISPARK) // Digispark specific
-#include "Arduino.h"
-#elif defined(ENERGIA) // LaunchPad specific
-#include "Energia.h"
-#elif defined(LITTLEROBOTFRIENDS) // LittleRobotFriends specific
-#include "LRF.h"
-#elif defined(MICRODUINO) // Microduino specific
-#include "Arduino.h"
-#elif defined(TEENSYDUINO) // Teensy specific
-#include "Arduino.h"
-#elif defined(REDBEARLAB) // RedBearLab specific
-#include "Arduino.h"
-#elif defined(SPARK) // Spark specific
-#include "application.h"
-#elif defined(ARDUINO) // Arduino 1.0 and 1.5 specific
-#include "Arduino.h"
-#else // error
-#error Platform not defined
-#endif // end IDE
 
-// Include application, user and local libraries
+#include "Arduino.h"
+#include "LedControl.h"
+
+#include "GlobalConstants.h"
+
+#include "Display.h"
+#include "Sprite.h"
 
 
-// Define variables and constants
-//
-// Brief	Name of the LED
-// Details	Each board has a LED but connected to a different pin
-//
-uint8_t myLED;
 
+Display mainDisplay = Display();
+Sprite testSprite = Sprite(0x8C80, positionMake(0, 0), true);
+Sprite testSprite2 = Sprite(0x8C80, positionMake(14, 3), true);
+Sprite testSprite3 = Sprite(0x8C80, positionMake(5, -3), true);
 
-//
-// Brief	Setup
-// Details	Define the pin the LED is connected to
-//
-// Add setup code
 void setup() {
-    // myLED pin number
-#if defined(ENERGIA) // All LaunchPads supported by Energia
-    myLED = RED_LED;
-#elif defined(DIGISPARK) // Digispark specific
-    myLED = 1; // assuming model A
-#elif defined(MAPLE_IDE) // Maple specific
-    myLED = BOARD_LED_PIN;
-#elif defined(WIRING) // Wiring specific
-    myLED = 15;
-#elif defined(LITTLEROBOTFRIENDS) // LittleRobotFriends specific
-    myLED = 10;
-#elif defined(SPARK) // Spark specific
-    myLED = D7;
-#else // Arduino, chipKIT, Teensy specific
-    myLED = 13;
-#endif
+
+    Serial.begin(9600);
+
+    mainDisplay.test();
     
-    pinMode(myLED, OUTPUT);
+    for (int pos = 0; pos < 18; pos++) {
+        
+        testSprite.moveSprite(1, 0);
+        testSprite2.moveSprite(-1, 0);
+        testSprite3.moveSprite(0, 1);
+        mainDisplay.clearDisplayMemory();
+        mainDisplay.drawSprite(testSprite);
+        mainDisplay.drawSprite(testSprite2);
+        mainDisplay.drawSprite(testSprite3);
+        mainDisplay.update();
+        delay(500);
+        
+    }
+
 }
 
-//
-// Brief	Loop
-// Details	Blink the LED
-//
-// Add loop code
 void loop() {
-    digitalWrite(myLED, HIGH);
+    
+    /*
+    mainDisplay.drawSprite(testSprite);
+    mainDisplay.update();
+    Serial.println("Sprite created");
     delay(500);
-    digitalWrite(myLED, LOW);
+    
+    
+    testSprite.moveSprite(1, 0);
+    mainDisplay.drawSprite(testSprite);
+    mainDisplay.update();
+    Serial.println("Sprite moved");
     delay(500);
+    
+    testSprite.moveSprite(1, 0);
+    mainDisplay.drawSprite(testSprite);
+    mainDisplay.update();
+    Serial.println("Sprite moved");
+    delay(500);
+    
+    testSprite.moveSprite(1, 0);
+    mainDisplay.drawSprite(testSprite);
+    mainDisplay.update();
+    Serial.println("Sprite moved");
+    delay(500);
+     
+     */
+
 }
